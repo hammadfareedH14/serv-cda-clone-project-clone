@@ -5,12 +5,11 @@ from CRUD.clinical.model import ClinicalModel
 
 clinical_blueprint = Blueprint('clinical', __name__)
 
-@classmethod
-def get_all(cls):
-    # Fetch all documents from the clinical collection
-    items = clinical_collection.find()
-    # Convert to list and serialize ObjectId
-    return [serialize_document(item) for item in items]
+# READ ALL
+@clinical_blueprint.route('/clinical-items', methods=['GET'])
+def get_clinical_items():
+    items = ClinicalModel.get_all()
+    return jsonify({"clinical_items": items}), 200
 
 
 
