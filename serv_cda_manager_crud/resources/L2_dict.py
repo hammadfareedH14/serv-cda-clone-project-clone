@@ -1,18 +1,17 @@
 from flask import jsonify, request, Blueprint
-from .model_l2_dict import L2DictModel
+from models.model_l2_dict import L2DictModel
 
-# Initialize the blueprint
-l2_dict_blueprint = Blueprint('l2_dict_blueprint', __name__)
+l2_dict_blueprint = Blueprint('l2_dict', __name__)
 
 # READ ALL
-@l2_dict_blueprint.route('/l2-dict', methods=['GET'])
+@l2_dict_blueprint.route('/all', methods=['GET'])
 def get_all_l2_dict_items():
 
     items = L2DictModel.get_all()
     return jsonify({"l2_dict_items": items}), 200
 
 # CREATE
-@l2_dict_blueprint.route('/l2-dict', methods=['POST'])
+@l2_dict_blueprint.route('/create', methods=['POST'])
 def create_l2_dict_item():
 
     data = request.get_json()
@@ -31,7 +30,7 @@ def create_l2_dict_item():
     return jsonify({"message": "L2 Dictionary item added successfully"}), 201
 
 # READ SINGLE
-@l2_dict_blueprint.route('/l2-dict/<item_id>', methods=['GET'])
+@l2_dict_blueprint.route('/<item_id>', methods=['GET'])
 def get_l2_dict_item_by_id(item_id):
 
     item = L2DictModel.get_by_id(item_id)
@@ -41,7 +40,7 @@ def get_l2_dict_item_by_id(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # UPDATE
-@l2_dict_blueprint.route('/l2-dict/<item_id>', methods=['PUT'])
+@l2_dict_blueprint.route('/<item_id>', methods=['PUT'])
 def update_l2_dict_item(item_id):
 
     data = request.get_json()
@@ -54,7 +53,7 @@ def update_l2_dict_item(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # DELETE
-@l2_dict_blueprint.route('/l2-dict/<item_id>', methods=['DELETE'])
+@l2_dict_blueprint.route('/<item_id>', methods=['DELETE'])
 def delete_l2_dict_item(item_id):
 
     deleted_item = L2DictModel.delete_by_id(item_id)
