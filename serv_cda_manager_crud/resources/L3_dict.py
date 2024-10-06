@@ -1,18 +1,17 @@
 from flask import jsonify, request, Blueprint
-from model_l3_dict import L3DictModel
+from models.model_l3_dict import L3DictModel
 
-# Initialize the blueprint
-l3_dict_blueprint = Blueprint('l3_dict_blueprint', __name__)
+L3_dict_blueprint = Blueprint('l3_dict', __name__)
 
 # READ ALL
-@l3_dict_blueprint.route('/l3-dict', methods=['GET'])
+@L3_dict_blueprint.route('/all', methods=['GET'])
 def get_all_l3_dict_items():
-    """Get all L3 Dictionary items"""
+
     items = L3DictModel.get_all()
     return jsonify({"l3_dict_items": items}), 200
 
 # CREATE
-@l3_dict_blueprint.route('/l3-dict', methods=['POST'])
+@L3_dict_blueprint.route('/create', methods=['POST'])
 def create_l3_dict_item():
     """Create a new L3 Dictionary item"""
     data = request.get_json()
@@ -55,10 +54,10 @@ def create_l3_dict_item():
 
     return jsonify({"message": "L3 Dictionary item added successfully"}), 201
 
-# READ SINGLE
-@l3_dict_blueprint.route('/l3-dict/<item_id>', methods=['GET'])
+# READ 
+@L3_dict_blueprint.route('/<item_id>', methods=['GET'])
 def get_l3_dict_item_by_id(item_id):
-    """Get a single L3 Dictionary item by its ID"""
+
     item = L3DictModel.get_by_id(item_id)
     if item:
         return jsonify({"l3_dict_item": item}), 200
@@ -66,9 +65,9 @@ def get_l3_dict_item_by_id(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # UPDATE
-@l3_dict_blueprint.route('/l3-dict/<item_id>', methods=['PUT'])
+@L3_dict_blueprint.route('/<item_id>', methods=['PUT'])
 def update_l3_dict_item(item_id):
-    """Update an L3 Dictionary item by ID"""
+
     data = request.get_json()
 
     updated_item = L3DictModel.update_by_id(item_id, data)
@@ -79,7 +78,7 @@ def update_l3_dict_item(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # DELETE
-@l3_dict_blueprint.route('/l3-dict/<item_id>', methods=['DELETE'])
+@L3_dict_blueprint.route('/<item_id>', methods=['DELETE'])
 def delete_l3_dict_item(item_id):
 
     deleted_item = L3DictModel.delete_by_id(item_id)
