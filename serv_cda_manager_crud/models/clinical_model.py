@@ -26,14 +26,6 @@ class ClinicalModel:
         return clinical_collection.insert_one(clinical_item)
 
     @staticmethod
-    def get_all():
-        return list(clinical_collection.find())
-
-    @staticmethod
-    def get_by_id(item_id):
-        return clinical_collection.find_one({'_id': ObjectId(item_id)})
-
-    @staticmethod
     def update_by_id(item_id, data):
         return clinical_collection.update_one(
             {'_id': ObjectId(item_id)},
