@@ -5,14 +5,14 @@ from models.model_intrepret import InterpretModel
 interpret_blueprint = Blueprint('interpret', __name__)
 
 # READ ALL
-@interpret_blueprint.route('/l2-dict-interpret', methods=['GET'])
+@interpret_blueprint.route('/all', methods=['GET'])
 def get_all_l2_dict_interpret_items():
 
     items = InterpretModel.get_all()
     return jsonify({"l2_dict_interpret_items": items}), 200
 
 # CREATE
-@interpret_blueprint.route('/l2-dict-interpret', methods=['POST'])
+@interpret_blueprint.route('/create', methods=['POST'])
 def create_l2_dict_interpret_item():
 
     data = request.get_json()
@@ -51,7 +51,7 @@ def create_l2_dict_interpret_item():
     return jsonify({"message": "L2 Dictionary Interpretation item added successfully"}), 201
 
 # READ 
-@interpret_blueprint.route('/l2-dict-interpret/<item_id>', methods=['GET'])
+@interpret_blueprint.route('/<item_id>', methods=['GET'])
 def get_l2_dict_interpret_item_by_id(item_id):
 
     item = InterpretModel.get_by_id(item_id)
@@ -61,7 +61,7 @@ def get_l2_dict_interpret_item_by_id(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # UPDATE
-@interpret_blueprint.route('/l2-dict-interpret/<item_id>', methods=['PUT'])
+@interpret_blueprint.route('/<item_id>', methods=['PUT'])
 def update_l2_dict_interpret_item(item_id):
 
     data = request.get_json()
@@ -74,7 +74,7 @@ def update_l2_dict_interpret_item(item_id):
         return jsonify({"message": "Item not found"}), 404
 
 # DELETE
-@interpret_blueprint.route('/l2-dict-interpret/<item_id>', methods=['DELETE'])
+@interpret_blueprint.route('/<item_id>', methods=['DELETE'])
 def delete_l2_dict_interpret_item(item_id):
 
     deleted_item = InterpretModel.delete_by_id(item_id)
